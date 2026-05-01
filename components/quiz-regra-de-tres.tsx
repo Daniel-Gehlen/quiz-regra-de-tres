@@ -361,6 +361,7 @@ export function generateProblem(): Problem {
   const scenario = scenarios[scenarioIndex]
 
   let a, b, c, result: number
+  const forceInteger = Math.random() > 0.5
 
   if (problemType === "direct") {
     // a/c = b/x => x = (c*b)/a
@@ -368,18 +369,27 @@ export function generateProblem(): Problem {
     c = getRandomInt(2, 40)
     while (c === a) c = getRandomInt(2, 40)
 
-    // Gerar b tal que x tenha no máximo 1 casa decimal
-    // (c*b)/a = N.d => c*b = (N.d) * a
-    // Para simplificar, b será um valor que resulte em algo amigável ou arredondaremos
-    b = getRandomInt(5, 100)
+    if (forceInteger) {
+      // Para ser inteiro, b deve ser tal que (c*b) % a == 0
+      // Fazendo b ser múltiplo de a, o resultado (c*b)/a será c * (b/a), que é inteiro.
+      b = a * getRandomInt(1, 5)
+    } else {
+      b = getRandomInt(5, 100)
+    }
     result = roundToHeader((c * b) / a)
   } else {
     // a*b = c*x => x = (a*b)/c
     a = getRandomInt(2, 20)
-    b = getRandomInt(2, 30)
     c = getRandomInt(2, 40)
     while (c === a) c = getRandomInt(2, 40)
 
+    if (forceInteger) {
+      // Para ser inteiro, (a*b) % c == 0
+      // Fazendo b ser múltiplo de c, o resultado (a*b)/c será a * (b/c), que é inteiro.
+      b = c * getRandomInt(1, 3)
+    } else {
+      b = getRandomInt(2, 30)
+    }
     result = roundToHeader((a * b) / c)
   }
 
