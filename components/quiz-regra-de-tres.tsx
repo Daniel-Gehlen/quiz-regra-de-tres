@@ -26,6 +26,31 @@ interface Problem {
   scenario: string
 }
 
+// Componente de Informação sobre Regra de Três
+function RuleOfThreeInfo() {
+  return (
+    <Alert className="bg-blue-50 border-blue-200">
+      <Info className="h-4 w-4 text-blue-600" />
+      <AlertTitle className="text-blue-800">Lembrete:</AlertTitle>
+      <AlertDescription className="text-blue-700 text-xs sm:text-sm">
+        <ul className="list-disc pl-4 mt-1 space-y-1">
+          <li>
+            <strong>Direta:</strong> Quando uma grandeza aumenta, a outra também aumenta. (Ex: Mais quilos, mais caro).
+          </li>
+          <li>
+            <strong>Inversa:</strong> Quando uma grandeza aumenta, a outra diminui. (Ex: Mais operários, menos tempo).
+          </li>
+        </ul>
+      </AlertDescription>
+    </Alert>
+  )
+}
+
+// Função para arredondar para no máximo 1 casa decimal
+export function roundToHeader(value: number): number {
+  return Math.round(value * 10) / 10
+}
+
 // Cenários para problemas de regra de três direta
 const directScenarios = [
   {
@@ -34,19 +59,16 @@ const directScenarios = [
     resultName: "paredes",
     timeValue: () => getRandomInt(2, 8),
     explanation: (values: any) => `
-1. Classificação: Direta (mais pintores → mais paredes no mesmo tempo)
+1. Identificação das Grandezas: Pintores e Paredes.
+2. Análise da Proporção: Se aumentarmos o número de pintores, a quantidade de paredes pintadas também aumentará (no mesmo tempo). Logo, são grandezas DIRETAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} pintores está para ${values.c} pintores
-   assim como ${values.b} paredes está para x paredes
+3. Montagem e Cálculo:
+   ${values.a} pintores -> ${values.b} paredes
+   ${values.c} pintores -> x paredes
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = ${values.b}/x
-   
-4. Cálculo:
-   ${values.a} × x = ${values.c} × ${values.b}
-   x = (${values.c} × ${values.b}) ÷ ${values.a}
-   x = ${values.c * values.b} ÷ ${values.a}
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -57,19 +79,16 @@ const directScenarios = [
     resultName: "peças",
     timeValue: () => getRandomInt(4, 12),
     explanation: (values: any) => `
-1. Classificação: Direta (mais máquinas → mais peças no mesmo tempo)
+1. Identificação das Grandezas: Máquinas e Peças.
+2. Análise da Proporção: Mais máquinas produzirão mais peças em um mesmo intervalo de tempo. Portanto, são grandezas DIRETAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} máquinas está para ${values.c} máquinas
-   assim como ${values.b} peças está para x peças
+3. Montagem e Cálculo:
+   ${values.a} máquinas -> ${values.b} peças
+   ${values.c} máquinas -> x peças
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = ${values.b}/x
-   
-4. Cálculo:
-   ${values.a} × x = ${values.c} × ${values.b}
-   x = (${values.c} × ${values.b}) ÷ ${values.a}
-   x = ${values.c * values.b} ÷ ${values.a}
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -80,19 +99,16 @@ const directScenarios = [
     resultName: "toneladas",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Direta (mais caminhões → mais toneladas transportadas)
+1. Identificação das Grandezas: Caminhões e Toneladas.
+2. Análise da Proporção: Aumentando o número de caminhões, a capacidade total de carga transportada aumenta. São grandezas DIRETAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} caminhões está para ${values.c} caminhões
-   assim como ${values.b} toneladas está para x toneladas
+3. Montagem e Cálculo:
+   ${values.a} caminhões -> ${values.b} toneladas
+   ${values.c} caminhões -> x toneladas
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = ${values.b}/x
-   
-4. Cálculo:
-   ${values.a} × x = ${values.c} × ${values.b}
-   x = (${values.c} × ${values.b}) ÷ ${values.a}
-   x = ${values.c * values.b} ÷ ${values.a}
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -103,19 +119,16 @@ const directScenarios = [
     resultName: "clientes",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Direta (mais funcionários → mais clientes atendidos)
+1. Identificação das Grandezas: Funcionários e Clientes.
+2. Análise da Proporção: Mais funcionários permitem atender mais clientes. São grandezas DIRETAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} funcionários está para ${values.c} funcionários
-   assim como ${values.b} clientes está para x clientes
+3. Montagem e Cálculo:
+   ${values.a} funcionários -> ${values.b} clientes
+   ${values.c} funcionários -> x clientes
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = ${values.b}/x
-   
-4. Cálculo:
-   ${values.a} × x = ${values.c} × ${values.b}
-   x = (${values.c} × ${values.b}) ÷ ${values.a}
-   x = ${values.c * values.b} ÷ ${values.a}
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -126,20 +139,55 @@ const directScenarios = [
     resultName: "folhetos",
     timeValue: () => getRandomInt(10, 30),
     explanation: (values: any) => `
-1. Classificação: Direta (mais impressoras → mais folhetos no mesmo tempo)
+1. Identificação das Grandezas: Impressoras e Folhetos.
+2. Análise da Proporção: Mais impressoras produzem mais folhetos no mesmo tempo. São grandezas DIRETAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} impressoras está para ${values.c} impressoras
-   assim como ${values.b} folhetos está para x folhetos
+3. Montagem e Cálculo:
+   ${values.a} impressoras -> ${values.b} folhetos
+   ${values.c} impressoras -> x folhetos
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = ${values.b}/x
-   
-4. Cálculo:
-   ${values.a} × x = ${values.c} × ${values.b}
-   x = (${values.c} × ${values.b}) ÷ ${values.a}
-   x = ${values.c * values.b} ÷ ${values.a}
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
    x = ${values.result} ${values.resultName}
+`,
+  },
+  {
+    template: "Se {a} kg de carne custam R$ {b}, quanto custarão {c} kg da mesma carne?",
+    valueNames: { a: "kg", b: "reais", c: "kg" },
+    resultName: "reais",
+    timeValue: null,
+    explanation: (values: any) => `
+1. Identificação das Grandezas: Peso (kg) e Preço (R$).
+2. Análise da Proporção: Se aumentarmos a quantidade de carne, o preço total aumentará proporcionalmente. São grandezas DIRETAMENTE proporcionais.
+
+3. Montagem e Cálculo:
+   ${values.a} kg -> ${values.b} reais
+   ${values.c} kg -> x reais
+   
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
+   x = R$ ${values.result}
+`,
+  },
+  {
+    template: "Um carro consome {a} litros de combustível para percorrer {b} km. Quantos km ele percorrerá com {c} litros?",
+    valueNames: { a: "litros", b: "km", c: "litros" },
+    resultName: "km",
+    timeValue: null,
+    explanation: (values: any) => `
+1. Identificação das Grandezas: Combustível (litros) e Distância (km).
+2. Análise da Proporção: Com mais combustível, o carro percorrerá uma distância maior. São grandezas DIRETAMENTE proporcionais.
+
+3. Montagem e Cálculo:
+   ${values.a} litros -> ${values.b} km
+   ${values.c} litros -> x km
+   
+   ${values.a}/ ${values.c} = ${values.b}/x
+   ${values.a} * x = ${values.c} * ${values.b}
+   x = (${values.c} * ${values.b}) / ${values.a}
+   x = ${values.result} km
 `,
   },
 ]
@@ -152,19 +200,16 @@ const inverseScenarios = [
     resultName: "dias",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Inversa (mais operários → menos dias para o mesmo trabalho)
+1. Identificação das Grandezas: Operários e Dias.
+2. Análise da Proporção: Se aumentarmos o número de operários, o tempo necessário (dias) para terminar o mesmo muro diminuirá. São grandezas INVERSAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} operários está para ${values.c} operários
-   assim como x dias está para ${values.b} dias
+3. Montagem e Cálculo:
+   ${values.a} operários -> ${values.b} dias
+   ${values.c} operários -> x dias
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = x/${values.b}
-   
-4. Cálculo:
-   ${values.a} × ${values.b} = ${values.c} × x
-   x = (${values.a} × ${values.b}) ÷ ${values.c}
-   x = ${values.a * values.b} ÷ ${values.c}
+   Como é inversa, invertemos uma das razões ou multiplicamos em linha:
+   ${values.a} * ${values.b} = ${values.c} * x
+   x = (${values.a} * ${values.b}) / ${values.c}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -174,19 +219,16 @@ const inverseScenarios = [
     resultName: "horas",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Inversa (mais torneiras → menos tempo para encher o tanque)
+1. Identificação das Grandezas: Torneiras e Horas.
+2. Análise da Proporção: Mais torneiras abertas encherão o tanque em menos tempo. São grandezas INVERSAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} torneiras está para ${values.c} torneiras
-   assim como x horas está para ${values.b} horas
+3. Montagem e Cálculo:
+   ${values.a} torneiras -> ${values.b} horas
+   ${values.c} torneiras -> x horas
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = x/${values.b}
-   
-4. Cálculo:
-   ${values.a} × ${values.b} = ${values.c} × x
-   x = (${values.a} × ${values.b}) ÷ ${values.c}
-   x = ${values.a * values.b} ÷ ${values.c}
+   Multiplicando em linha (inversa):
+   ${values.a} * ${values.b} = ${values.c} * x
+   x = (${values.a} * ${values.b}) / ${values.c}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -197,19 +239,16 @@ const inverseScenarios = [
     resultName: "horas",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Inversa (mais pessoas → menos tempo para o mesmo trabalho)
+1. Identificação das Grandezas: Pessoas e Horas.
+2. Análise da Proporção: Aumentando a equipe, o tempo para realizar o mesmo trabalho diminui. São grandezas INVERSAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} pessoas está para ${values.c} pessoas
-   assim como x horas está para ${values.b} horas
+3. Montagem e Cálculo:
+   ${values.a} pessoas -> ${values.b} horas
+   ${values.c} pessoas -> x horas
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = x/${values.b}
-   
-4. Cálculo:
-   ${values.a} × ${values.b} = ${values.c} × x
-   x = (${values.a} × ${values.b}) ÷ ${values.c}
-   x = ${values.a * values.b} ÷ ${values.c}
+   Multiplicando em linha (inversa):
+   ${values.a} * ${values.b} = ${values.c} * x
+   x = (${values.a} * ${values.b}) / ${values.c}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -220,42 +259,56 @@ const inverseScenarios = [
     resultName: "horas",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Inversa (maior velocidade → menos tempo para a mesma distância)
+1. Identificação das Grandezas: Velocidade (km/h) e Tempo (horas).
+2. Análise da Proporção: Se o carro for mais rápido (maior velocidade), ele levará menos tempo para percorrer a mesma distância. São grandezas INVERSAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} km/h está para ${values.c} km/h
-   assim como x horas está para ${values.b} horas
+3. Montagem e Cálculo:
+   ${values.a} km/h -> ${values.b} horas
+   ${values.c} km/h -> x horas
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = x/${values.b}
-   
-4. Cálculo:
-   ${values.a} × ${values.b} = ${values.c} × x
-   x = (${values.a} × ${values.b}) ÷ ${values.c}
-   x = ${values.a * values.b} ÷ ${values.c}
+   Multiplicando em linha (inversa):
+   ${values.a} * ${values.b} = ${values.c} * x
+   x = (${values.a} * ${values.b}) / ${values.c}
    x = ${values.result} ${values.resultName}
 `,
   },
   {
     template:
-      "{a} máquinas produzem determinada quantidade de peças em {b} horas. Quanto tempo {c} máquinas levarão para produzir a mesma quantidade?",
-    valueNames: { a: "máquinas", b: "horas", c: "máquinas" },
-    resultName: "horas",
+      "Com uma velocidade de {a} m/min, um atleta completa uma pista em {b} segundos. Se ele correr a {c} m/min, em quanto tempo completará a pista?",
+    valueNames: { a: "velocidade", b: "segundos", c: "velocidade" },
+    resultName: "segundos",
     timeValue: null,
     explanation: (values: any) => `
-1. Classificação: Inversa (mais máquinas → menos tempo para a mesma produção)
+1. Identificação das Grandezas: Velocidade e Tempo.
+2. Análise da Proporção: Maior velocidade resulta em menor tempo para o mesmo percurso. São grandezas INVERSAMENTE proporcionais.
 
-2. Proporção:
-   ${values.a} máquinas está para ${values.c} máquinas
-   assim como x horas está para ${values.b} horas
+3. Montagem e Cálculo:
+   ${values.a} m/min -> ${values.b} s
+   ${values.c} m/min -> x s
    
-3. Montagem da equação:
-   ${values.a}/${values.c} = x/${values.b}
+   Multiplicando em linha (inversa):
+   ${values.a} * ${values.b} = ${values.c} * x
+   x = (${values.a} * ${values.b}) / ${values.c}
+   x = ${values.result} ${values.resultName}
+`,
+  },
+  {
+    template:
+      "Para ler um livro em {b} dias, preciso ler {a} páginas por dia. Se eu ler {c} páginas por dia, em quantos dias terminarei?",
+    valueNames: { a: "páginas/dia", b: "dias", c: "páginas/dia" },
+    resultName: "dias",
+    timeValue: null,
+    explanation: (values: any) => `
+1. Identificação das Grandezas: Páginas por dia e Total de dias.
+2. Análise da Proporção: Se eu ler mais páginas por dia, terminarei o livro em menos dias. São grandezas INVERSAMENTE proporcionais.
+
+3. Montagem e Cálculo:
+   ${values.a} pág/dia -> ${values.b} dias
+   ${values.c} pág/dia -> x dias
    
-4. Cálculo:
-   ${values.a} × ${values.b} = ${values.c} × x
-   x = (${values.a} × ${values.b}) ÷ ${values.c}
-   x = ${values.a * values.b} ÷ ${values.c}
+   Multiplicando em linha (inversa):
+   ${values.a} * ${values.b} = ${values.c} * x
+   x = (${values.a} * ${values.b}) / ${values.c}
    x = ${values.result} ${values.resultName}
 `,
   },
@@ -270,7 +323,9 @@ function getRandomInt(min: number, max: number): number {
 function replacePlaceholders(template: string, values: Record<string, any>): string {
   let result = template
   for (const key in values) {
-    result = result.replace(`{${key}}`, values[key])
+    if (values[key] !== null) {
+      result = result.replace(`{${key}}`, values[key])
+    }
   }
   return result
 }
@@ -282,8 +337,8 @@ function generateOptions(correctAnswer: number): { value: number; label: string 
   // Gerar opções incorretas plausíveis
   while (options.length < 4) {
     // Variação de 10% a 30% para mais ou para menos
-    const variation = correctAnswer * (getRandomInt(10, 30) / 100) * (Math.random() > 0.5 ? 1 : -1)
-    const optionValue = Math.max(1, Math.round(correctAnswer + variation))
+    const variation = correctAnswer * (getRandomInt(10, 50) / 100) * (Math.random() > 0.5 ? 1 : -1)
+    const optionValue = roundToHeader(Math.max(0.1, correctAnswer + variation))
 
     // Verificar se a opção já existe
     if (!options.some((opt) => opt.value === optionValue)) {
@@ -296,7 +351,7 @@ function generateOptions(correctAnswer: number): { value: number; label: string 
 }
 
 // Função para gerar um problema de regra de três
-function generateProblem(): Problem {
+export function generateProblem(): Problem {
   // Determinar se será regra de três direta ou inversa
   const problemType: ProportionType = Math.random() > 0.5 ? "direct" : "inverse"
 
@@ -305,35 +360,27 @@ function generateProblem(): Problem {
   const scenarioIndex = getRandomInt(0, scenarios.length - 1)
   const scenario = scenarios[scenarioIndex]
 
-  // Gerar valores aleatórios para o problema
-  let a = getRandomInt(2, 10)
-  let c = getRandomInt(2, 15)
-
-  // Garantir que c seja diferente de a
-  while (c === a) {
-    c = getRandomInt(2, 15)
-  }
-
-  // Gerar b de forma que o resultado seja um número inteiro
-  let b: number
-  let result: number
+  let a, b, c, result: number
 
   if (problemType === "direct") {
-    // Para regra de três direta: a/c = b/x => x = (c*b)/a
-    // Queremos que x seja inteiro, então b deve ser múltiplo de a
-    const multiplier = getRandomInt(1, 5)
-    b = a * multiplier
-    result = Math.round((c * b) / a)
+    // a/c = b/x => x = (c*b)/a
+    a = getRandomInt(2, 20)
+    c = getRandomInt(2, 40)
+    while (c === a) c = getRandomInt(2, 40)
+
+    // Gerar b tal que x tenha no máximo 1 casa decimal
+    // (c*b)/a = N.d => c*b = (N.d) * a
+    // Para simplificar, b será um valor que resulte em algo amigável ou arredondaremos
+    b = getRandomInt(5, 100)
+    result = roundToHeader((c * b) / a)
   } else {
-    // Para regra de três inversa: a/c = x/b => x = (a*b)/c
-    // Queremos que x seja inteiro, então a*b deve ser múltiplo de c
-    b = getRandomInt(2, 12)
-    // Ajustar a para que a*b seja múltiplo de c
-    const remainder = (a * b) % c
-    if (remainder !== 0) {
-      a = a + (c - remainder) / b
-    }
-    result = Math.round((a * b) / c)
+    // a*b = c*x => x = (a*b)/c
+    a = getRandomInt(2, 20)
+    b = getRandomInt(2, 30)
+    c = getRandomInt(2, 40)
+    while (c === a) c = getRandomInt(2, 40)
+
+    result = roundToHeader((a * b) / c)
   }
 
   // Criar valores para substituir no template
@@ -347,16 +394,11 @@ function generateProblem(): Problem {
   // Substituir placeholders no template
   const questionText = replacePlaceholders(scenario.template, values)
 
-  // Adicionar a classificação ao enunciado
-  const questionWithClassification = `${questionText} Use regra de três ${problemType === "direct" ? "DIRETA" : "INVERSA"}.`
-
   // Gerar explicação detalhada
   const explanationValues = {
-    a: a,
-    b: b,
-    c: c,
+    ...values,
     result: result,
-    resultName: scenario.valueNames.b === "paredes" ? "paredes" : scenario.resultName,
+    resultName: scenario.resultName,
   }
 
   const explanation = scenario.explanation(explanationValues)
@@ -366,17 +408,12 @@ function generateProblem(): Problem {
 
   // Criar o problema
   return {
-    question: questionWithClassification,
+    question: questionText,
     options: options,
     correctAnswer: result,
     explanation: explanation,
     type: problemType,
-    values: {
-      a: a,
-      b: b,
-      c: c,
-      result: result,
-    },
+    values: { a, b, c, result },
     scenario: scenario.template,
   }
 }
@@ -412,7 +449,8 @@ export function QuizRegradeTres() {
 
     setIsAnswered(true)
 
-    if (Number.parseInt(selectedOption) === problem.correctAnswer) {
+    // Usar parseFloat para lidar com casas decimais
+    if (Number.parseFloat(selectedOption) === problem.correctAnswer) {
       setScore((prev) => ({ ...prev, correct: prev.correct + 1 }))
     } else {
       setScore((prev) => ({ ...prev, incorrect: prev.incorrect + 1 }))
@@ -431,10 +469,11 @@ export function QuizRegradeTres() {
 
   if (isLoading) {
     return (
-      <Card className="w-full max-w-3xl mx-auto">
+      <Card className="w-full max-w-3xl mx-auto shadow-lg">
         <CardContent className="pt-6">
-          <div className="flex justify-center items-center h-40">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          <div className="flex flex-col justify-center items-center h-60 gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <p className="text-muted-foreground animate-pulse">Gerando problema...</p>
           </div>
         </CardContent>
       </Card>
@@ -443,128 +482,130 @@ export function QuizRegradeTres() {
 
   if (!problem) {
     return (
-      <Card className="w-full max-w-3xl mx-auto">
-        <CardContent className="pt-6">
-          <div className="text-center p-6">
-            <p className="text-red-500">Erro ao carregar o problema. Por favor, tente novamente.</p>
-            <Button onClick={createNewProblem} className="mt-4">
-              Tentar Novamente
-            </Button>
-          </div>
+      <Card className="w-full max-w-3xl mx-auto shadow-lg">
+        <CardContent className="pt-6 text-center">
+          <p className="text-destructive mb-4">Erro ao carregar o problema.</p>
+          <Button onClick={createNewProblem}>Tentar Novamente</Button>
         </CardContent>
       </Card>
     )
   }
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
-      <CardHeader>
-        <CardTitle className="flex justify-between items-center">
-          <span>Problema de Regra de Três</span>
-          <div className="flex items-center gap-4 text-sm">
-            <span className="flex items-center gap-1 text-green-600">
-              <CheckCircle className="h-4 w-4" /> {score.correct}
-            </span>
-            <span className="flex items-center gap-1 text-red-600">
-              <XCircle className="h-4 w-4" /> {score.incorrect}
-            </span>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <Alert>
-          <AlertTitle className="text-lg font-medium">Problema:</AlertTitle>
-          <AlertDescription className="mt-2">{problem.question}</AlertDescription>
-        </Alert>
+    <div className="w-full max-w-3xl mx-auto space-y-4">
+      <RuleOfThreeInfo />
 
-        <div className="space-y-2">
-          <h3 className="font-medium">Alternativas:</h3>
-          <RadioGroup
-            value={selectedOption || ""}
-            onValueChange={setSelectedOption}
-            className="space-y-3"
-            disabled={isAnswered}
-          >
-            {problem.options.map((option, index) => {
-              const letters = ["A", "B", "C", "D"]
-              return (
-                <div
-                  key={index}
-                  className={`flex items-center space-x-2 border p-3 rounded-md ${
-                    isAnswered && option.value === problem.correctAnswer ? "bg-green-100 border-green-300" : ""
-                  } ${
-                    isAnswered && selectedOption === option.value.toString() && option.value !== problem.correctAnswer
-                      ? "bg-red-100 border-red-300"
-                      : ""
-                  }`}
-                >
-                  <RadioGroupItem value={option.value.toString()} id={`option-${index}`} disabled={isAnswered} />
-                  <Label htmlFor={`option-${index}`} className="w-full cursor-pointer">
-                    {letters[index]}) {option.value}
-                  </Label>
-                  {isAnswered && option.value === problem.correctAnswer && (
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  )}
-                  {isAnswered &&
-                    selectedOption === option.value.toString() &&
-                    option.value !== problem.correctAnswer && <XCircle className="h-5 w-5 text-red-600" />}
-                </div>
-              )
-            })}
-          </RadioGroup>
-        </div>
-
-        {isAnswered && (
-          <div className="mt-6">
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="font-bold">Tipo: Regra de Três {problem.type === "direct" ? "Direta" : "Inversa"}</h3>
-              <Button variant="outline" size="sm" onClick={toggleExplanation} className="flex items-center gap-1">
-                <Info className="h-4 w-4" /> {showExplanation ? "Ocultar Solução" : "Ver Solução"}
-              </Button>
+      <Card className="shadow-lg border-t-4 border-t-primary">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex justify-between items-center text-xl sm:text-2xl">
+            <span className="truncate">Desafio de Proporção</span>
+            <div className="flex items-center gap-3 text-sm font-bold bg-muted p-2 rounded-full px-4">
+              <span className="flex items-center gap-1 text-green-600">
+                <CheckCircle className="h-4 w-4" /> {score.correct}
+              </span>
+              <span className="flex items-center gap-1 text-red-600">
+                <XCircle className="h-4 w-4" /> {score.incorrect}
+              </span>
             </div>
-
-            {showExplanation && (
-              <div className="p-4 bg-gray-50 rounded-md border">
-                <h4 className="font-medium mb-2">Solução:</h4>
-                <div className="text-sm space-y-3">
-                  {problem.explanation.split("\n\n").map((paragraph, i) => (
-                    <p
-                      key={i}
-                      className={
-                        paragraph.trim().startsWith("1.") ||
-                        paragraph.trim().startsWith("2.") ||
-                        paragraph.trim().startsWith("3.") ||
-                        paragraph.trim().startsWith("4.")
-                          ? "font-medium"
-                          : "pl-4"
-                      }
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-                <div className="mt-3 font-medium">
-                  Resposta correta:{" "}
-                  {problem.options.findIndex((opt) => opt.value === problem.correctAnswer) !== -1
-                    ? `${["A", "B", "C", "D"][problem.options.findIndex((opt) => opt.value === problem.correctAnswer)]} (${problem.correctAnswer})`
-                    : problem.correctAnswer}
-                </div>
-              </div>
-            )}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="p-4 bg-muted/50 rounded-lg border border-muted select-none">
+            <h3 className="text-sm font-semibold text-muted-foreground uppercase mb-2">Enunciado</h3>
+            <p className="text-base sm:text-lg leading-relaxed">{problem.question}</p>
           </div>
-        )}
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        {!isAnswered ? (
-          <Button onClick={checkAnswer} disabled={!selectedOption}>
-            Verificar Resposta
-          </Button>
-        ) : (
-          <Button onClick={createNewProblem} className="flex items-center gap-2">
-            <RefreshCw className="h-4 w-4" /> Novo Problema
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
+
+          <div className="space-y-3">
+            <h3 className="font-bold text-sm sm:text-base">Escolha a alternativa correta:</h3>
+            <RadioGroup
+              value={selectedOption || ""}
+              onValueChange={setSelectedOption}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+              disabled={isAnswered}
+            >
+              {problem.options.map((option, index) => {
+                const letters = ["A", "B", "C", "D"]
+                const isCorrect = isAnswered && option.value === problem.correctAnswer
+                const isSelectedAndWrong =
+                  isAnswered && selectedOption === option.value.toString() && option.value !== problem.correctAnswer
+
+                return (
+                  <div
+                    key={index}
+                    className={`flex items-center space-x-3 border-2 p-4 rounded-xl transition-all cursor-pointer hover:bg-muted/30 ${
+                      isCorrect ? "bg-green-50 border-green-500 ring-1 ring-green-500" : ""
+                    } ${isSelectedAndWrong ? "bg-red-50 border-red-500 ring-1 ring-red-500" : ""} ${
+                      !isAnswered && selectedOption === option.value.toString() ? "border-primary bg-primary/5" : "border-border"
+                    }`}
+                  >
+                    <RadioGroupItem value={option.value.toString()} id={`option-${index}`} disabled={isAnswered} />
+                    <Label
+                      htmlFor={`option-${index}`}
+                      className="flex-1 font-medium cursor-pointer py-1 text-base sm:text-lg"
+                    >
+                      <span className="mr-2 text-muted-foreground">{letters[index]})</span>
+                      {option.value}
+                    </Label>
+                    {isCorrect && <CheckCircle className="h-5 w-5 text-green-600" />}
+                    {isSelectedAndWrong && <XCircle className="h-5 w-5 text-red-600" />}
+                  </div>
+                )
+              })}
+            </RadioGroup>
+          </div>
+
+          {isAnswered && (
+            <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 bg-primary/5 p-4 rounded-lg border border-primary/20">
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase font-bold">Tipo de Proporção</span>
+                  <h3 className="font-bold text-lg">Regra de Três {problem.type === "direct" ? "Direta" : "Inversa"}</h3>
+                </div>
+                <Button variant="outline" size="sm" onClick={toggleExplanation} className="w-full sm:w-auto font-bold">
+                  <Info className="h-4 w-4 mr-2" /> {showExplanation ? "Ocultar Solução" : "Ver Solução Detalhada"}
+                </Button>
+              </div>
+
+              {showExplanation && (
+                <div className="p-5 bg-card rounded-xl border-2 border-dashed border-muted shadow-inner">
+                  <h4 className="font-bold mb-4 text-primary">Passo a Passo:</h4>
+                  <div className="text-sm sm:text-base space-y-4">
+                    {problem.explanation.split("\n\n").map((paragraph, i) => (
+                      <div
+                        key={i}
+                        className={
+                          paragraph.trim().match(/^[0-9]\./)
+                            ? "font-bold text-foreground border-l-4 border-primary pl-3 py-1"
+                            : "pl-5 text-muted-foreground"
+                        }
+                      >
+                        {paragraph}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 pt-4 border-t text-center font-bold text-lg text-green-600">
+                    Gabarito: {["A", "B", "C", "D"][problem.options.findIndex((opt) => opt.value === problem.correctAnswer)]} ({problem.correctAnswer})
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+        <CardFooter className="flex flex-col sm:flex-row gap-4 sm:justify-between pt-6 border-t">
+          {!isAnswered ? (
+            <Button onClick={checkAnswer} disabled={!selectedOption} className="w-full sm:w-auto h-12 px-8 font-bold text-lg">
+              Verificar Resposta
+            </Button>
+          ) : (
+            <Button onClick={createNewProblem} className="w-full sm:w-auto h-12 px-8 font-bold text-lg">
+              <RefreshCw className="h-5 w-5 mr-2" /> Novo Problema
+            </Button>
+          )}
+          <p className="text-xs text-muted-foreground text-center">
+            Responda atentamente e confira a explicação se tiver dúvida!
+          </p>
+        </CardFooter>
+      </Card>
+    </div>
   )
 }
